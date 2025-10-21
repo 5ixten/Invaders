@@ -6,12 +6,14 @@ namespace Invaders;
 
 public class Player : Actor
 {
-    private const float damageCoolDown = 2000;
-    private float lastDamageTaken = -damageCoolDown;
-    private bool isInvincible;
+    private const float _damageCoolDown = 2000;
+    private float _lastDamageTaken = -_damageCoolDown;
+    private bool _isInvincible;
     
     public Player() : base("PlayerShip")
     {
+        Console.WriteLine("HJEllo");
+        ZIndex = 5;
         Speed = 200f;
         ReloadTime = 500f;
         
@@ -24,7 +26,7 @@ public class Player : Actor
         base.Update(scene, deltaTime);
         
         float currentTime = scene.Clock.ElapsedTime.AsMilliseconds();
-        isInvincible = currentTime < lastDamageTaken + damageCoolDown;
+        _isInvincible = currentTime < _lastDamageTaken + _damageCoolDown;
         
         int xDir = 0;
         xDir += scene.InputManager.IsKeyDown(Keyboard.Key.A) ? -1 : 0;
@@ -36,7 +38,7 @@ public class Player : Actor
         
         Direction = new Vector2f(xDir, yDir);
 
-        if (scene.InputManager.IsKeyDown(Keyboard.Key.Space))
+        if (scene.InputManager.MousePressed || scene.InputManager.IsKeyDown(Keyboard.Key.Space))
         {
             Shoot(scene);
         }
@@ -58,7 +60,8 @@ public class Player : Actor
 
     public override void Render(RenderTarget target)
     {
-        Sprite.Color = new Color(255, 255, 255, isInvincible ? (byte)90 : (byte)255);
+        //Console.WriteLine(_isInvincible);
+        Sprite.Color = new Color(255, 255, 255, _isInvincible ? (byte)90 : (byte)255);
         base.Render(target);
     }
 
@@ -71,8 +74,8 @@ public class Player : Actor
     public override void TakeDamage(Scene scene, int amount)
     {
         float currentTime = scene.Clock.ElapsedTime.AsMilliseconds();
-        if (isInvincible) return; // Invincible after taking damage for a short while
-        lastDamageTaken = currentTime;
+        if (_isInvincible) return; // Invincible after taking damage for a short while
+        _lastDamageTaken = currentTime;
         
         base.TakeDamage(scene, amount);
         if (IsDead)

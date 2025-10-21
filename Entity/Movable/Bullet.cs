@@ -9,6 +9,8 @@ public class Bullet : Movable
     
     public Bullet(Type shooter, Vector2f position, float speed, Vector2f direction) : base("Bullet")
     {
+        ZIndex = 3;
+        
         Position = position;
         Direction = direction;
         Speed = speed;

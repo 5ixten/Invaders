@@ -80,3 +80,6 @@ C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\PlayerShip.png
 C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Bullet.png
 C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\EnemyShip.png
 C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\pixel-font.ttf
+C:\Users\sixte\Assignments\Invaders\obj\Debug\net9.0\Invaders.sourcelink.json
+C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Explosion.png
+C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Button.png

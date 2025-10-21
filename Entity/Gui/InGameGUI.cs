@@ -8,6 +8,7 @@ public class InGameGUI : GUI
     private Text scoreText;
     
     private float lastSpawn;
+    private int playerHealth;
     
     public InGameGUI() : base("PlayerShip")
     {
@@ -17,6 +18,9 @@ public class InGameGUI : GUI
 
     public override void Create(Scene scene)
     {
+        base.Create(scene);
+        Sprite.Scale = new Vector2f(0.35f, 0.35f);
+        
         scoreText.Font = scene.AssetManager.LoadFont("pixel-font");
         scoreText.DisplayedString = "Score: 0";
         scoreText.CharacterSize = 16;
@@ -25,6 +29,7 @@ public class InGameGUI : GUI
     
     public override void JustLoaded(Scene scene)
     {
+        scene.Clock.Restart();
         scene.EnemySpawnSpeed = scene.BaseEnemySpawnSpeed;
         scene.QueueSpawn(new Player());
     }
@@ -34,6 +39,11 @@ public class InGameGUI : GUI
         base.Update(scene, deltaTime);
         if (!IsActive) return;
 
+        if (scene.FindByType<Player>(out Player player))
+        {
+            playerHealth = player.Health;
+        }
+        
         scene.Score = (int)Math.Floor(scene.Clock.ElapsedTime.AsSeconds()) * 10;
         scoreText.DisplayedString = $"Score: {scene.Score}";
 
@@ -50,5 +60,18 @@ public class InGameGUI : GUI
     {
         if (!IsActive) return;
         target.Draw(scoreText);
+
+        RenderHealth(target);
+    }
+    
+    private void RenderHealth(RenderTarget target)
+    {
+        for (int i = 0; i < playerHealth; i++) {
+            Sprite.Position = new Vector2f(
+                20 + i*20 + i * Sprite.GetGlobalBounds().Width,
+                20);
+
+            base.Render(target);
+        }
     }
 }

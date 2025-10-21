@@ -8,15 +8,16 @@ public class Enemy : Actor
     
     public Enemy() : base("EnemyShip")
     {
+        ZIndex = 4;
+        
         Random random = new Random();
-
         int xDir = random.Next(0, 2) == 0 ? -1 : 1;
         
         Direction = new Vector2f(xDir, 1);
         Sprite.Rotation = MathF.Atan2(Direction.Y, Direction.X) * 180f / MathF.PI - 90;
         
         Speed = 100f;
-        ReloadTime = 1000;
+        ReloadTime = 600;
 
         Position = GetRandomPosition();
     }

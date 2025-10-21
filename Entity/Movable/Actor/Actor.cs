@@ -37,4 +37,9 @@ public abstract class Actor : Movable
         TakeDamage(scene, bullet.Damage);
         bullet.IsDead = true;
     }
+
+    public override void Destroy(Scene scene)
+    {
+        scene.QueueSpawn(new Explosion(Position));
+    }
 }

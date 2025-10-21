@@ -9,18 +9,24 @@ namespace Invaders;
 class Program {
     
     public static readonly Vector2u WindowSize = new Vector2u(550, 800);
+    public static Window Window { get; private set; }
     
-    static void Main(string[] args) {
+    static void Main(string[] args) 
+    {
         using (var window = new RenderWindow(
-                   new VideoMode(WindowSize.X, WindowSize.Y), "Pacman")) {
+                   new VideoMode(WindowSize.X, WindowSize.Y), "Pacman")) 
+        {
             
+            Window = window;
             window.Closed += (o, e) => window.Close();
 
             Clock clock = new Clock();
-            Scene scene = new Scene(window);
+            Scene scene = new Scene();
        
             while (window.IsOpen) {
                 window.DispatchEvents();
+                
+                
                 float deltaTime = clock.Restart().AsSeconds();
                 deltaTime = MathF.Min(deltaTime, 0.01f);
                 
@@ -35,17 +41,48 @@ class Program {
         }
     }
 
-    public static void SaveHighScore(string name, int score)
+    private static void SaveHighscores(Dictionary<string, int> highscores)
     {
-        File.WriteAllText("HighScore.txt", score.ToString(), Encoding.UTF8);
+        string saveString = string.Join(";", highscores.Select(hvp => $"{hvp.Key},{hvp.Value}"));
+        File.WriteAllText("Highscores.txt", saveString, Encoding.UTF8);
+    }
+
+    public static void SaveHighscore(string name, int score)
+    {
+        Dictionary<string, int> highscores = GetHighscores();
+        highscores[name] = score;
+        
+        highscores = highscores
+            .OrderByDescending(h => h.Value)
+            .ToDictionary(h => h.Key, h => h.Value);
+        
+        SaveHighscores(highscores);
     }
     
-    static int GetHighScore()
+    public static Dictionary<string, int> GetHighscores()
     {
-        string savedContent = File.ReadAllText("HighScore.txt", Encoding.UTF8);
-        if (int.TryParse(savedContent, out int score))
-            return score;
+        Dictionary<string, int> highscores = new();
 
-        return 0; 
+        if (!File.Exists("Highscores.txt"))
+        {
+            return highscores;
+        }
+        
+        string savedContent = File.ReadAllText("Highscores.txt", Encoding.UTF8);
+        string[] nameScorePairs = savedContent.Split(';');
+
+        foreach (string nameScorePair in nameScorePairs)
+        {
+            string[] splitPair = nameScorePair.Split(',');
+            string name = splitPair[0];
+            string score = splitPair[1];
+            
+            if (int.TryParse(score, out int scoreInt))
+            {
+                highscores.Add(name, scoreInt);
+            }
+        }
+        
+        return highscores; 
     }
 }

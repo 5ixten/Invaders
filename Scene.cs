@@ -22,9 +22,9 @@ public class Scene
      public bool JustLoadedState { get; private set; }
      public readonly Clock Clock;
 
-     public Scene(Window window)
+     public Scene()
      {
-          SceneState = SceneState.IN_GAME;
+          SceneState = SceneState.MAIN_MENU;
           
           _queuedSpawns = new List<Entity>();
           _entities = new List<Entity>();
@@ -36,18 +36,29 @@ public class Scene
           AssetManager = new AssetManager();
           SoundManager = new SoundManager();
           EventManager = new EventManager();
-          InputManager = new InputManager(window);
+          InputManager = new InputManager();
           
           Spawn(new MainMenuGUI());
           Spawn(new HighScoreMenuGUI());
           Spawn(new InGameGUI());
           Spawn(new GameOverGUI());
+          Spawn(new QuitGUI());
      }
 
      public void UpdateAll(float deltaTime)
      {
           Score += 1;
           SceneState lastState = SceneState;
+          
+          // Kill all game related entities
+          if (JustLoadedState && SceneState == SceneState.GAME_OVER)
+          {
+               Console.WriteLine("DESTROYTING");
+               foreach (Entity entity in _entities)
+               {
+                    entity.IsDead = !entity.DontDestroyOnLoad;
+               }
+          }
           
           foreach (Entity entity in _queuedSpawns)
           {
@@ -71,10 +82,7 @@ public class Scene
                return false;
           });
 
-          if (lastState == SceneState)
-          {
-               JustLoadedState = false;
-          }
+          JustLoadedState = lastState != SceneState;
      }
 
      public void RenderAll(RenderTarget target)
@@ -103,7 +111,6 @@ public class Scene
      public void SetSceneState(SceneState state)
      {
           SceneState = state;
-          JustLoadedState = true;
      }
      
      public bool FindByType<T>(out T found) where T : Entity 

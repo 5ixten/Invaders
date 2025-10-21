@@ -5,17 +5,30 @@ namespace Invaders;
 public class InputManager
 {
     public readonly Dictionary<Keyboard.Key, bool> KeysDown = new();
+    public bool MousePressed;
 
-    public InputManager(Window window)
+    public InputManager()
     {
-        window.KeyPressed += (sender, args) =>
+        Program.Window.KeyPressed += (sender, args) =>
         {
             KeysDown[args.Code] = true;
         };
 
-        window.KeyReleased += (sender, args) =>
+        Program.Window.KeyReleased += (sender, args) =>
         {
             KeysDown[args.Code] = false;
+        };
+        
+        Program.Window.MouseButtonPressed += (sender, e) =>
+        {
+            if (e.Button == Mouse.Button.Left)
+                MousePressed = true;
+        };
+        
+        Program.Window.MouseButtonReleased += (sender, e) =>
+        {
+            if (e.Button == Mouse.Button.Left)
+                MousePressed = false;
         };
     }
     
