@@ -17,7 +17,7 @@ public class InputManager
         Program.Window.KeyPressed += (sender, args) =>
         {
             KeysDown[args.Code] = true;
-            WasKeyPressed = true;
+            WasKeyPressed = false;
             
             if (_alphabet.Contains(args.Code.ToString().ToLower()))
             {
@@ -45,7 +45,7 @@ public class InputManager
 
     public void Update()
     {
-        WasKeyPressed = false;
+        WasKeyPressed = true;
         LastLetterPressed = "";
     }
     

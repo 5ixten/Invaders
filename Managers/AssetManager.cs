@@ -58,4 +58,17 @@ public class AssetManager
         
         return sound;
     }
+
+    public void DisposeAll()
+    {
+        foreach (var sound in sounds)
+        {
+            sound.Value.Dispose();
+        }
+        
+        foreach (var texture in textures)
+        {
+            texture.Value.Dispose();
+        }
+    }
 }

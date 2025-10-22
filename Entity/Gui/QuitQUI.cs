@@ -14,6 +14,8 @@ public class QuitGUI : GUI
         base.Update(scene, deltaTime);
         if (!IsActive) return;
         
+        scene.SoundManager.DisposeAll();
+        scene.AssetManager.DisposeAll();
         Program.Window.Close();
     }
     

@@ -26,18 +26,14 @@ public class Button : Entity
     {
         base.Create(scene);
         
-        FloatRect bounds = Sprite.GetLocalBounds();
-        Sprite.Origin = new Vector2f(
-            bounds.Width / 2f, bounds.Height / 2f);
+        Entity.CenterOrigin(Sprite);
         
         _textInstance = new Text();
         _textInstance.Font = scene.AssetManager.LoadFont("pixel-font");
         _textInstance.CharacterSize = 16;
         _textInstance.DisplayedString = _text;
         
-        bounds = _textInstance.GetLocalBounds();
-        _textInstance.Origin = new Vector2f(
-            bounds.Width / 2f, bounds.Height / 2f);
+        Entity.CenterOrigin(_textInstance);
         
         _textInstance.Position = Position;
     }

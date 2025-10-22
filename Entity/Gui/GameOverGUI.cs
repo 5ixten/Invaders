@@ -34,9 +34,7 @@ public class GameOverGUI : GUI
         _prompText.Position = new Vector2f(Program.WindowSize.X/2, Program.WindowSize.Y-50);
         _prompText.DisplayedString = "Press ENTER to continue";
         
-        FloatRect bounds = _prompText.GetLocalBounds();
-        _prompText.Origin = new Vector2f(
-            bounds.Width / 2f, bounds.Height / 2f);
+        Entity.CenterOrigin(_prompText);
         
         _inputText.Font = scene.AssetManager.LoadFont("pixel-font");
         _inputText.CharacterSize = 24;
@@ -66,9 +64,7 @@ public class GameOverGUI : GUI
         scene.EventManager.PublishPlaySound(SoundType.GameOver);
 
         _scoreText.DisplayedString = $"Final score: {scene.Score}";
-        FloatRect bounds = _scoreText.GetLocalBounds();
-        _scoreText.Origin = new Vector2f(
-            bounds.Width / 2f, bounds.Height / 2f);
+        Entity.CenterOrigin(_scoreText);
         
         if (_highscoresTexts == null) return;
         
@@ -89,9 +85,7 @@ public class GameOverGUI : GUI
         
         _inputText.DisplayedString = $"Your name: {_inputName}";
         
-        FloatRect bounds = _inputText.GetLocalBounds();
-        _inputText.Origin = new Vector2f(
-            bounds.Width / 2f, bounds.Height / 2f);
+        Entity.CenterOrigin(_inputText);
 
         if (!_allowHighscore)
         {
@@ -99,9 +93,7 @@ public class GameOverGUI : GUI
             if (scene.InputManager.IsKeyDown(Keyboard.Key.Enter))
                 scene.SetSceneState(SceneState.MAIN_MENU);
             
-            bounds = _inputText.GetLocalBounds();
-            _inputText.Origin = new Vector2f(
-                bounds.Width / 2f, bounds.Height / 2f);
+            Entity.CenterOrigin(_inputText);;
             
             return;
         }

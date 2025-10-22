@@ -52,7 +52,7 @@ public class InGameGUI : GUI
         if (currentTime - lastSpawn > scene.EnemySpawnSpeed)
         {
             lastSpawn = currentTime;
-            scene.EnemySpawnSpeed = Math.Max(scene.EnemySpawnSpeed - 100, 500); // Make enemies spawn faster
+            scene.EnemySpawnSpeed = Math.Max(scene.EnemySpawnSpeed - 100, 300); // Make enemies spawn faster
             scene.QueueSpawn(new Enemy());
         }
     }

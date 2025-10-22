@@ -26,7 +26,16 @@ public class SoundManager
 
     public void Update()
     {
-        activeSounds.RemoveAll(s => s.Status != SoundStatus.Playing);
+        activeSounds.RemoveAll(s =>
+        {
+            if (s.Status != SoundStatus.Playing)
+            {
+                s.Stop();
+                s.Dispose();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void PlaySound(SoundType soundType)
@@ -50,5 +59,14 @@ public class SoundManager
         
         created = null;
         return false;
+    }
+    
+    public void DisposeAll()
+    {
+        for (int i = 0; i < activeSounds.Count; i++)
+        {
+            activeSounds[i].Stop();
+            activeSounds[i].Dispose();
+        }
     }
 }

@@ -18,13 +18,14 @@ public class Player : Actor
         
         Position = new Vector2f(Program.WindowSize.X/2, Program.WindowSize.Y-150);
         
-        MaxHealth = 1;
+        MaxHealth = 3;
         Health = MaxHealth;
     }
     
     public override void Update(Scene scene, float deltaTime)
     {
         base.Update(scene, deltaTime);
+        ReloadTime = Math.Min(ReloadTime, scene.EnemySpawnSpeed*2);
         
         float currentTime = scene.Clock.ElapsedTime.AsMilliseconds();
         _isInvincible = currentTime < _lastDamageTaken + _damageCoolDown;
@@ -63,7 +64,6 @@ public class Player : Actor
 
     public override void Render(RenderTarget target)
     {
-        //Console.WriteLine(_isInvincible);
         Sprite.Color = new Color(255, 255, 255, _isInvincible ? (byte)90 : (byte)255);
         base.Render(target);
     }

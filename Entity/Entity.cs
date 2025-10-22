@@ -29,6 +29,20 @@ public abstract class Entity
         Sprite = new Sprite();
     }
 
+    public static void CenterOrigin(Sprite sprite)
+    {
+        FloatRect bounds = sprite.GetLocalBounds();
+        sprite.Origin = new Vector2f(
+            bounds.Width / 2f, bounds.Height / 2f);
+    }
+    
+    public static void CenterOrigin(Text text)
+    {
+        FloatRect bounds = text.GetLocalBounds();
+        text.Origin = new Vector2f(
+            bounds.Width / 2f, bounds.Height / 2f);
+    }
+
     public virtual void Create(Scene scene)
     {
         Sprite.Texture = scene.AssetManager.LoadTexture(_textureName);

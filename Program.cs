@@ -14,14 +14,19 @@ class Program {
     static void Main(string[] args) 
     {
         using (var window = new RenderWindow(
-                   new VideoMode(WindowSize.X, WindowSize.Y), "Pacman")) 
+                   new VideoMode(WindowSize.X, WindowSize.Y), "Invaders")) 
         {
-            
             Window = window;
-            window.Closed += (o, e) => window.Close();
-
+            
             Clock clock = new Clock();
             Scene scene = new Scene();
+            
+            window.Closed += (o, e) =>
+            {
+                scene.SoundManager.DisposeAll();
+                scene.AssetManager.DisposeAll();
+                window.Close();
+            };
        
             while (window.IsOpen) {
                 window.DispatchEvents();
