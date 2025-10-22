@@ -5,7 +5,7 @@ namespace Invaders;
 public class SoundManager
 {
     private Dictionary<SoundType, Func<SoundBuffer>> loaders;
-    private readonly List<Sound> activeSounds = new List<Sound>();
+    private readonly List<Sound> _activeSounds = new List<Sound>();
 
     public SoundManager(Scene scene)
     {
@@ -26,7 +26,7 @@ public class SoundManager
 
     public void Update()
     {
-        activeSounds.RemoveAll(s =>
+        _activeSounds.RemoveAll(s =>
         {
             if (s.Status != SoundStatus.Playing)
             {
@@ -45,7 +45,7 @@ public class SoundManager
             Sound newSound = new Sound(soundBuffer);
             newSound.Play();
             
-            activeSounds.Add(newSound);
+            _activeSounds.Add(newSound);
         }
     }
 
@@ -63,10 +63,10 @@ public class SoundManager
     
     public void DisposeAll()
     {
-        for (int i = 0; i < activeSounds.Count; i++)
+        for (int i = 0; i < _activeSounds.Count; i++)
         {
-            activeSounds[i].Stop();
-            activeSounds[i].Dispose();
+            _activeSounds[i].Stop();
+            _activeSounds[i].Dispose();
         }
     }
 }

@@ -87,6 +87,8 @@ class Program {
         foreach (string nameScorePair in nameScorePairs)
         {
             string[] splitPair = nameScorePair.Split(',');
+            if (splitPair.Length != 2) continue;
+            
             string name = splitPair[0];
             string score = splitPair[1];
             

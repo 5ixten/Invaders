@@ -6,8 +6,8 @@ public class EventManager
     private SoundType? _soundType;
     
     public event PlaySoundEvent PlaySound;
+    
     public void PublishPlaySound(SoundType soundType) => _soundType = soundType;
-
     public void Update()
     {
         if (_soundType != null) {

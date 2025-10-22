@@ -5,27 +5,27 @@ namespace Invaders;
 
 public class Animation
 {
-    public readonly IntRect[] TextureInfos;
+    public readonly IntRect[] Frames;
     public readonly float Speed;
-    private Clock clock;
-    private int currentFrame;
+    private Clock _clock;
+    private int _currentFrame;
 
-    public Animation(IntRect[] textureInfos, float speed)
+    public Animation(IntRect[] frames, float speed)
     {
-        TextureInfos = textureInfos;
+        Frames = frames;
         Speed = speed;
-        clock = new Clock();
+        _clock = new Clock();
     }
     
-    public int LoopedCount => (int)Math.Floor((float)(currentFrame / TextureInfos.Length));
+    public int LoopedCount => (int)Math.Floor((float)(_currentFrame / Frames.Length));
 
     public IntRect GetCurrentTextureRect()
     {
-        if (clock.ElapsedTime.AsMilliseconds() >= Speed)
+        if (_clock.ElapsedTime.AsMilliseconds() >= Speed)
         {
-            currentFrame++;
-            clock.Restart();
+            _currentFrame++;
+            _clock.Restart();
         }
-        return TextureInfos[currentFrame % TextureInfos.Length];
+        return Frames[_currentFrame % Frames.Length];
     }
 }

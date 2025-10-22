@@ -6,8 +6,8 @@ namespace Invaders;
 
 public class Player : Actor
 {
-    private const float _damageCoolDown = 2000;
-    private float _lastDamageTaken = -_damageCoolDown;
+    private const float DamageCoolDown = 2000;
+    private float _lastDamageTaken = -DamageCoolDown;
     private bool _isInvincible;
     
     public Player() : base("PlayerShip")
@@ -28,7 +28,7 @@ public class Player : Actor
         ReloadTime = Math.Min(ReloadTime, scene.EnemySpawnSpeed*2);
         
         float currentTime = scene.Clock.ElapsedTime.AsMilliseconds();
-        _isInvincible = currentTime < _lastDamageTaken + _damageCoolDown;
+        _isInvincible = currentTime < _lastDamageTaken + DamageCoolDown;
         
         int xDir = 0;
         xDir += scene.InputManager.IsKeyDown(Keyboard.Key.A) ? -1 : 0;

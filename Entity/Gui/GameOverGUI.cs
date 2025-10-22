@@ -10,10 +10,11 @@ public class GameOverGUI : GUI
     private List<Text> _highscoresTexts;
     private Text _inputText;
     private Text _scoreText;
-    private Text _prompText;
+    private Text _promptText;
     
     private string _inputName = "";
     private bool _allowHighscore;
+    private bool _canContinue = false;
     
     public GameOverGUI() : base("PlayerShip")
     {
@@ -27,14 +28,14 @@ public class GameOverGUI : GUI
         _highscoresTexts = new List<Text>();
         _inputText = new Text();
         _scoreText = new Text();
-        _prompText = new Text();
+        _promptText = new Text();
         
-        _prompText.Font = scene.AssetManager.LoadFont("pixel-font");
-        _prompText.CharacterSize = 24;
-        _prompText.Position = new Vector2f(Program.WindowSize.X/2, Program.WindowSize.Y-50);
-        _prompText.DisplayedString = "Press ENTER to continue";
+        _promptText.Font = scene.AssetManager.LoadFont("pixel-font");
+        _promptText.CharacterSize = 24;
+        _promptText.Position = new Vector2f(Program.WindowSize.X/2, Program.WindowSize.Y-50);
+        _promptText.DisplayedString = "Press ENTER to continue";
         
-        Entity.CenterOrigin(_prompText);
+        CenterOrigin(_promptText);
         
         _inputText.Font = scene.AssetManager.LoadFont("pixel-font");
         _inputText.CharacterSize = 24;
@@ -56,7 +57,7 @@ public class GameOverGUI : GUI
         }
     }
     
-    public override void JustLoaded(Scene scene)
+    protected override void JustLoaded(Scene scene)
     {
         _inputName = "";
         _highscores = Program.GetHighscores();
@@ -64,7 +65,7 @@ public class GameOverGUI : GUI
         scene.EventManager.PublishPlaySound(SoundType.GameOver);
 
         _scoreText.DisplayedString = $"Final score: {scene.Score}";
-        Entity.CenterOrigin(_scoreText);
+        CenterOrigin(_scoreText);
         
         if (_highscoresTexts == null) return;
         
@@ -73,7 +74,7 @@ public class GameOverGUI : GUI
         int i = 0;
         foreach (var kvp in _highscores)
         {
-            _highscoresTexts[i].DisplayedString = $"{kvp.Key}: {kvp.Value}";
+            _highscoresTexts[i].DisplayedString = $"{i+1}.     {kvp.Key}: {kvp.Value}";
             i++;
         }
     }
@@ -84,8 +85,9 @@ public class GameOverGUI : GUI
         if (!IsActive) return;
         
         _inputText.DisplayedString = $"Your name: {_inputName}";
+        _canContinue = true;
         
-        Entity.CenterOrigin(_inputText);
+        CenterOrigin(_inputText);
 
         if (!_allowHighscore)
         {
@@ -93,7 +95,7 @@ public class GameOverGUI : GUI
             if (scene.InputManager.IsKeyDown(Keyboard.Key.Enter))
                 scene.SetSceneState(SceneState.MAIN_MENU);
             
-            Entity.CenterOrigin(_inputText);;
+            CenterOrigin(_inputText);;
             
             return;
         }
@@ -114,9 +116,12 @@ public class GameOverGUI : GUI
             scene.Score = 0;
             return;
         }
-        
+
         if (_inputName.Length < 5)
+        {
             _inputName += scene.InputManager.LastLetterPressed;
+            _canContinue = false;
+        }
     }
     
     public override void Render(RenderTarget target)
@@ -124,8 +129,10 @@ public class GameOverGUI : GUI
         if (!IsActive) return;
         
         target.Draw(_inputText);
-        target.Draw(_prompText);
         target.Draw(_scoreText);
+        
+        if (_canContinue)
+            target.Draw(_promptText);
         
         foreach (var text in _highscoresTexts)
         {

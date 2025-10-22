@@ -4,7 +4,7 @@ namespace Invaders;
 
 public class Enemy : Actor
 {
-    private float nextShot;
+    private float _nextShot;
     
     public Enemy() : base("EnemyShip")
     {
@@ -35,8 +35,8 @@ public class Enemy : Actor
     
     public override void Shoot (Scene scene){
         float currentTime = scene.Clock.ElapsedTime.AsMilliseconds();
-        if (currentTime < nextShot) return;
-        nextShot = currentTime + ReloadTime + new Random().Next(0, 1000);
+        if (currentTime < _nextShot) return;
+        _nextShot = currentTime + ReloadTime + new Random().Next(0, 1000);
         
         Vector2f pos = new Vector2f(Position.X, Position.Y);
         scene.QueueSpawn(new Bullet(GetType(), pos, 300, Direction));

@@ -39,7 +39,7 @@ public abstract class GUI : Entity
         }
     }
 
-    public virtual void JustLoaded(Scene scene)
+    protected virtual void JustLoaded(Scene scene)
     {
         
     }

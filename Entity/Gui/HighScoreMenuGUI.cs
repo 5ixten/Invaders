@@ -35,7 +35,7 @@ public class HighScoreMenuGUI : GUI
         scene.QueueSpawn(Buttons[^1]);
     }
     
-    public override void JustLoaded(Scene scene)
+    protected override void JustLoaded(Scene scene)
     {
         _highscores = Program.GetHighscores();
         
@@ -43,7 +43,7 @@ public class HighScoreMenuGUI : GUI
         int i = 0;
         foreach (var kvp in _highscores)
         {
-            _highscoresTexts[i].DisplayedString = $"{kvp.Key}: {kvp.Value}";
+            _highscoresTexts[i].DisplayedString = $"{i+1}.     {kvp.Key}: {kvp.Value}";
             i++;
         }
     }

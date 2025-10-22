@@ -27,7 +27,7 @@ public class InGameGUI : GUI
         scoreText.Position = new Vector2f(20, Program.WindowSize.Y - scoreText.GetLocalBounds().Height - 20);
     }
     
-    public override void JustLoaded(Scene scene)
+    protected override void JustLoaded(Scene scene)
     {
         scene.Clock.Restart();
         lastSpawn = 0;

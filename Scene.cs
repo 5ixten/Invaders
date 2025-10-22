@@ -82,6 +82,7 @@ public class Scene
 
           InputManager.Update();
           EventManager.Update();
+          SoundManager.Update();
           JustLoadedState = lastState != SceneState;
      }
 
