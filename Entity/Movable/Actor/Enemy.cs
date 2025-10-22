@@ -16,7 +16,7 @@ public class Enemy : Actor
         Direction = new Vector2f(xDir, 1);
         Sprite.Rotation = MathF.Atan2(Direction.Y, Direction.X) * 180f / MathF.PI - 90;
         
-        Speed = 100f;
+        Speed = 200f;
         ReloadTime = 600;
 
         Position = GetRandomPosition();

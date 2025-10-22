@@ -12,12 +12,13 @@ public class Player : Actor
     
     public Player() : base("PlayerShip")
     {
-        Console.WriteLine("HJEllo");
         ZIndex = 5;
         Speed = 200f;
         ReloadTime = 500f;
         
-        MaxHealth = 3;
+        Position = new Vector2f(Program.WindowSize.X/2, Program.WindowSize.Y-150);
+        
+        MaxHealth = 1;
         Health = MaxHealth;
     }
     

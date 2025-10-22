@@ -4,7 +4,12 @@ namespace Invaders;
 
 public class InputManager
 {
+    private string _alphabet = "abcdefghijklmnopqrstuvwxyzåäö";
+    
     public readonly Dictionary<Keyboard.Key, bool> KeysDown = new();
+    public bool WasKeyPressed;
+    public string LastLetterPressed;
+    
     public bool MousePressed;
 
     public InputManager()
@@ -12,6 +17,12 @@ public class InputManager
         Program.Window.KeyPressed += (sender, args) =>
         {
             KeysDown[args.Code] = true;
+            WasKeyPressed = true;
+            
+            if (_alphabet.Contains(args.Code.ToString().ToLower()))
+            {
+                LastLetterPressed = args.Code.ToString();
+            }
         };
 
         Program.Window.KeyReleased += (sender, args) =>
@@ -30,6 +41,12 @@ public class InputManager
             if (e.Button == Mouse.Button.Left)
                 MousePressed = false;
         };
+    }
+
+    public void Update()
+    {
+        WasKeyPressed = false;
+        LastLetterPressed = "";
     }
     
     public bool IsKeyDown(Keyboard.Key key)

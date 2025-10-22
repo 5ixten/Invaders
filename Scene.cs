@@ -14,7 +14,7 @@ public class Scene
      public EventManager EventManager;
      public InputManager InputManager;
 
-     public readonly int BaseEnemySpawnSpeed = 5000;
+     public readonly int BaseEnemySpawnSpeed = 3000;
      public int EnemySpawnSpeed;
      public float Score;
      
@@ -47,13 +47,11 @@ public class Scene
 
      public void UpdateAll(float deltaTime)
      {
-          Score += 1;
           SceneState lastState = SceneState;
           
           // Kill all game related entities
           if (JustLoadedState && SceneState == SceneState.GAME_OVER)
           {
-               Console.WriteLine("DESTROYTING");
                foreach (Entity entity in _entities)
                {
                     entity.IsDead = !entity.DontDestroyOnLoad;
@@ -82,6 +80,7 @@ public class Scene
                return false;
           });
 
+          InputManager.Update();
           JustLoadedState = lastState != SceneState;
      }
 

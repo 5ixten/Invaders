@@ -6,22 +6,30 @@ namespace Invaders;
 public class HighScoreMenuGUI : GUI
 {
     private Dictionary<string, int> _highscores;
-    private Text _highscoresText;
+    private List<Text> _highscoresTexts;
     
     
     public HighScoreMenuGUI() : base("PlayerShip")
     {
         SceneState = SceneState.HIGHSCORE_MENU;
-        _highscoresText = new Text();
     }
 
     public override void Create(Scene scene)
     {
         base.Create(scene);
         
-        _highscoresText.Font = scene.AssetManager.LoadFont("pixel-font");
-        _highscoresText.CharacterSize = 24;
-        _highscoresText.Position = new Vector2f(50, 50);
+        _highscoresTexts = new List<Text>();
+        
+        for (int i = 0; i < 5; i++)
+        {
+            Text newText = new Text();
+            
+            newText.Font = scene.AssetManager.LoadFont("pixel-font");
+            newText.CharacterSize = 24;
+            newText.Position = new Vector2f(50, 50 + i*35);
+            
+            _highscoresTexts.Add(newText);
+        }
         
         Buttons.Add(new Button(this, SceneState.MAIN_MENU, "Back", 
             new Vector2f(275, 700)));
@@ -31,14 +39,20 @@ public class HighScoreMenuGUI : GUI
     public override void JustLoaded(Scene scene)
     {
         _highscores = Program.GetHighscores();
-        
+
         _highscores.Add("Sixte", 330);
-        _highscores.Add("Cissy", 3030);
+        _highscores.Add("Charle", 3030);
         _highscores.Add("OScar", 530);
         _highscores.Add("Loblo", 10);
+
         
-        _highscoresText.DisplayedString =
-            string.Join("\n", _highscores.Select(hvp => $"{hvp.Key}: {hvp.Value}"));
+        if (_highscoresTexts == null) return;
+        int i = 0;
+        foreach (var kvp in _highscores)
+        {
+            _highscoresTexts[i].DisplayedString = $"{kvp.Key}: {kvp.Value}";
+            i++;
+        }
     }
     
     public override void Update(Scene scene, float deltaTime)
@@ -50,7 +64,10 @@ public class HighScoreMenuGUI : GUI
     public override void Render(RenderTarget target)
     {
         if (!IsActive) return;
-        
-        target.Draw(_highscoresText);
+
+        foreach (var text in _highscoresTexts)
+        {
+            target.Draw(text);
+        }
     }
 }
