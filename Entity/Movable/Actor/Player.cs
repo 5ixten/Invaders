@@ -57,6 +57,8 @@ public class Player : Actor
 
         scene.QueueSpawn(new Bullet(GetType(), pos1, 500, new Vector2f(0, -1)));
         scene.QueueSpawn(new Bullet(GetType(), pos2, 500, new Vector2f(0, -1)));
+        
+        scene.EventManager.PublishPlaySound(SoundType.Shot);
     }
 
     public override void Render(RenderTarget target)

@@ -30,6 +30,7 @@ public class InGameGUI : GUI
     public override void JustLoaded(Scene scene)
     {
         scene.Clock.Restart();
+        lastSpawn = 0;
         scene.EnemySpawnSpeed = scene.BaseEnemySpawnSpeed;
         scene.QueueSpawn(new Player());
     }

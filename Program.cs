@@ -52,9 +52,17 @@ class Program {
         Dictionary<string, int> highscores = GetHighscores();
         highscores[name] = score;
         
+        // Sort highscores
         highscores = highscores
             .OrderByDescending(h => h.Value)
             .ToDictionary(h => h.Key, h => h.Value);
+        
+        // Remove lowest highscore if full
+        if (highscores.Count > 15)
+        {
+            var lowest = highscores.OrderBy(h => h.Value).First();
+            highscores.Remove(lowest.Key);
+        }
         
         SaveHighscores(highscores);
     }

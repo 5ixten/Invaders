@@ -84,3 +84,6 @@ C:\Users\sixte\Assignments\Invaders\obj\Debug\net9.0\Invaders.sourcelink.json
 C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Explosion.png
 C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Button.png
 C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\MainTheme.wav
+C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Explosion.wav
+C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\Shot.wav
+C:\Users\sixte\Assignments\Invaders\bin\Debug\net9.0\Assets\GameOver.wav

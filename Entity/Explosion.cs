@@ -38,6 +38,7 @@ public class Explosion : Entity
     {
         base.Create(scene);
         Sprite.Origin = new Vector2f(32, 32);
+        scene.EventManager.PublishPlaySound(SoundType.Explosion);
     }
 
     public override void Update(Scene scene, float deltaTime) 

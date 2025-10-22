@@ -16,7 +16,7 @@ public class Scene
 
      public readonly int BaseEnemySpawnSpeed = 3000;
      public int EnemySpawnSpeed;
-     public float Score;
+     public int Score;
      
      public SceneState SceneState { get; private set; }
      public bool JustLoadedState { get; private set; }
@@ -33,9 +33,9 @@ public class Scene
 
           EnemySpawnSpeed = BaseEnemySpawnSpeed;
           
-          AssetManager = new AssetManager();
-          SoundManager = new SoundManager();
           EventManager = new EventManager();
+          AssetManager = new AssetManager();
+          SoundManager = new SoundManager(this);
           InputManager = new InputManager();
           
           Spawn(new MainMenuGUI());
@@ -81,6 +81,7 @@ public class Scene
           });
 
           InputManager.Update();
+          EventManager.Update();
           JustLoadedState = lastState != SceneState;
      }
 

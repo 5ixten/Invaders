@@ -18,6 +18,8 @@ public class Button : Entity
         _sceneState = sceneState;
         Sprite.Position = position;
         _text = text;
+
+        DontDestroyOnLoad = true;
     }
 
     public override void Create(Scene scene)

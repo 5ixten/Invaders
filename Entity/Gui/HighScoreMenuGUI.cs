@@ -8,7 +8,6 @@ public class HighScoreMenuGUI : GUI
     private Dictionary<string, int> _highscores;
     private List<Text> _highscoresTexts;
     
-    
     public HighScoreMenuGUI() : base("PlayerShip")
     {
         SceneState = SceneState.HIGHSCORE_MENU;
@@ -20,7 +19,7 @@ public class HighScoreMenuGUI : GUI
         
         _highscoresTexts = new List<Text>();
         
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 15; i++)
         {
             Text newText = new Text();
             
@@ -39,12 +38,6 @@ public class HighScoreMenuGUI : GUI
     public override void JustLoaded(Scene scene)
     {
         _highscores = Program.GetHighscores();
-
-        _highscores.Add("Sixte", 330);
-        _highscores.Add("Charle", 3030);
-        _highscores.Add("OScar", 530);
-        _highscores.Add("Loblo", 10);
-
         
         if (_highscoresTexts == null) return;
         int i = 0;
